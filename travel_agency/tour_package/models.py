@@ -48,13 +48,17 @@ class TourPackage(models.Model):
         help_text="Maximum Capacity of travelers",
         blank=True, null=True
     )
+    available_places = models.PositiveSmallIntegerField(
+        help_text="Maximum Capacity of travelers",
+        blank=True, null=True
+    )
     destination = models.ManyToManyField(Destination)
 
     def __str__(self):
         return self.name
 
     def get_destinations(self):
-        return "\n".join([d.destinations for d in self.destination.all()])
+        return self.destination.all()
 
 
 class TourDate(models.Model):

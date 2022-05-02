@@ -16,24 +16,10 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import include, path
 
-from rest_framework import routers
-
-from travel_agency.tour_package.views import DestinationTypeViewSet, DestinationViewSet, TourPackageViewSet, \
-    TourDateViewSet
-from travel_agency.weather_map.views import CityViewSet, CountryViewSet
-
-router = routers.DefaultRouter()
-router.register(r'cities', CityViewSet, basename='city')
-router.register(r'countries', CountryViewSet, basename='country')
-router.register(r'destination_types', DestinationTypeViewSet, basename='destination_type')
-router.register(r'destinations', DestinationViewSet, basename='destination')
-router.register(r'tour_dates', TourDateViewSet, basename='tour_date')
-router.register(r'tour_packages', TourPackageViewSet, basename='tour_package')
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('weather_map/', include('travel_agency.weather_map.urls')),
     path('tour_package/', include('travel_agency.tour_package.urls')),
-    # path('api/', include(router.urls)),
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
 ]

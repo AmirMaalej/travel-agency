@@ -31,14 +31,19 @@ class TourDateSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = TourDate
-        fields = '__all__'
+        fields = ['date']
 
 
 class TourPackageSerializer(serializers.ModelSerializer):
     """
     Serializer for TourPackage model
     """
+    tour_dates = serializers.SerializerMethodField()
 
     class Meta:
         model = TourPackage
-        fields = '__all__'
+        fields = ['name', 'price', 'description', 'capacity', 'available_places', 'destination', 'tour_dates']
+
+    def get_tour_dates(self, instance):
+        serializer = TourDateSerializer(instance.tourdate_set.all(), many=True)
+        return serializer.data
